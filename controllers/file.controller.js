@@ -1,4 +1,5 @@
-const { v4: uuidv4 } = require("uuid");
+const path = require("path");
+const rootDir = path.dirname(process.mainModule.filename);
 
 const File = require("../models/file.model");
 
@@ -17,7 +18,8 @@ const createFile = async (req, res) => {
       return res.status(400).send("Please upload an image.");
     }
     const image = req.files.file;
-    const uploadPath = __dirname + "/uploads/" + image.name;
+    const dbPath = Date.now() + image.name;
+    const uploadPath = rootDir + "/uploads/" + dbPath;
 
     image.mv(uploadPath, function (err) {
       if (err) {
@@ -26,8 +28,7 @@ const createFile = async (req, res) => {
     });
 
     const newFile = new File({
-      id: uuidv4(),
-      url: uploadPath,
+      url: dbPath,
     });
     await newFile.save();
     res.status(201).json(newFile);

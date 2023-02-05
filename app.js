@@ -13,12 +13,12 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static("upload"));
+app.use(express.static("uploads"));
 app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api/files", fileRouter);
+app.use("/api/file", fileRouter);
 
 app.get("/", (req, res) => {
   res.status(404).json({
