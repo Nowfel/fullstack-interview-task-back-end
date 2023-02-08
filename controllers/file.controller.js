@@ -14,11 +14,10 @@ const getAllFiles = async (req, res) => {
 
 const createFile = async (req, res) => {
   try {
-    if (!req.files || !req.files.file) {
-      return res.status(400).send("Please upload an image.");
-    }
     const image = req.files.file;
     const dbPath = Date.now() + image.name;
+    const date = new Date();
+
     const uploadPath = rootDir + "/uploads/" + dbPath;
 
     image.mv(uploadPath, function (err) {
